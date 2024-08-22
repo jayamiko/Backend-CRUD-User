@@ -7,7 +7,7 @@ const {
   deleteUser,
   updateUser,
 } = require("../controller/user");
-const { register, login } = require("../controller/auth");
+const { register, login, checkAuth } = require("../controller/auth");
 
 // Route User
 router.get("/users", getUsers);
@@ -18,5 +18,6 @@ router.delete("/deleteUser/:id", deleteUser);
 // Route Auth
 router.post("/register", register);
 router.post("/login", login);
+router.get("/checkAuth", checkAuth);
 
 module.exports = router;

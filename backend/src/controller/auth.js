@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const db = require("../db/db");
 const dbConfig = require("../config/dbConfig");
@@ -100,6 +101,57 @@ exports.login = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Server error",
+    });
+  }
+};
+
+exports.checkAuth = async (req, res) => {
+  try {
+    await database.connect();
+
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).send({
+        status: "failed",
+        message: "No token provided or token format invalid",
+      });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+    const userData = await database.query(
+      "SELECT id, username, create_time FROM tbl_user WHERE id = ?",
+      [decoded.id]
+    );
+
+    if (!userData.length) {
+      return res.status(404).send({
+        status: "failed",
+        message: "User not found",
+      });
+    }
+
+    const user = userData[0];
+    const newUserData = {
+      id: user.id,
+      username: user.username,
+      create_time: user.create_time,
+    };
+
+    res.send({
+      success: true,
+      data: {
+        user: newUserData,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "server error",
     });
   }
 };
