@@ -55,7 +55,7 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      status: "failed",
+      success: false,
       message: "Server error",
     });
   }

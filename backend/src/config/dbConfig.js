@@ -1,8 +1,8 @@
 const dbConfig = {
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "userdb",
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
 };
 
 module.exports = dbConfig;

@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
@@ -9,12 +8,15 @@ const router = require("./src/routes/index");
 const app = express();
 const PORT = 8080;
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+
 const database = new db(dbConfig);
 
 app.use(express.json());
-app.use(cors());
-
-app.locals.database = database;
 
 app.use("/api", router);
 
