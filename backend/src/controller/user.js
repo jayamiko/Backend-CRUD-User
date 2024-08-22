@@ -58,3 +58,35 @@ exports.getUser = async (req, res) => {
     });
   }
 };
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await database.connect();
+
+    const result = await database.query(
+      `
+        DELETE FROM tbl_user WHERE id = ?
+      `,
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
