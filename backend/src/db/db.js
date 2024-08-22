@@ -35,7 +35,7 @@ class db {
         if (err) {
           reject(err);
         } else {
-          resolve([results, fields]); // Ensure results are returned as an array
+          resolve([results, fields]);
         }
       });
     });
