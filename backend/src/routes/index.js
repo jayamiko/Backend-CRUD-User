@@ -12,6 +12,7 @@ const {
 // Route User
 router.get("/users", getUsers);
 router.get("/user/:id", getUser);
+router.put("/updateUser/:id", updateUser);
 router.delete("/deleteUser/:id", deleteUser);
 
 // Route Auth

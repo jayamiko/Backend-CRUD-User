@@ -58,6 +58,43 @@ exports.getUser = async (req, res) => {
     });
   }
 };
+
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { username } = req.body;
+
+  try {
+    await database.connect();
+
+    const result = await database.query(
+      `
+        UPDATE tbl_user 
+        SET username = ?
+        WHERE id = ?
+      `,
+      [username, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found or no changes made",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
 exports.deleteUser = async (req, res) => {
   const { id } = req.params;
 
