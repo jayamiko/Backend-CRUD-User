@@ -78,7 +78,7 @@ exports.login = async (req, res) => {
     if (!userExist) {
       return res.status(400).send({
         success: false,
-        message: "user not dound",
+        message: "user not found",
       });
     }
 
@@ -113,7 +113,7 @@ exports.checkAuth = async (req, res) => {
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).send({
-        status: "failed",
+        success: false,
         message: "No token provided or token format invalid",
       });
     }
@@ -129,7 +129,7 @@ exports.checkAuth = async (req, res) => {
 
     if (!userData.length) {
       return res.status(404).send({
-        status: "failed",
+        success: false,
         message: "User not found",
       });
     }
