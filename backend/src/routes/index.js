@@ -11,7 +11,6 @@ const { register, login, checkAuth } = require("../controller/auth");
 
 // Route User
 router.get("/users", getUsers);
-router.get("/user/:id", getUser);
 router.put("/updateUser/:id", updateUser);
 router.delete("/deleteUser/:id", deleteUser);
 
