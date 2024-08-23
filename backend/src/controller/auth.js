@@ -78,7 +78,7 @@ exports.login = async (req, res) => {
     if (!userExist) {
       return res.status(400).send({
         success: false,
-        message: "user not found",
+        message: "User not found",
       });
     }
 
@@ -95,12 +95,13 @@ exports.login = async (req, res) => {
     res.status(200).send({
       success: true,
       token,
+      message: "Login Success",
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Server error",
+      message: "Login Failed",
     });
   }
 };
